@@ -1,3 +1,29 @@
+# RandomWalker 0.2.0
+
+## Breaking Changes
+None
+
+## New Features
+1. Fix #92 - Add Function `std_cum_sum_augment()` to calculate the cumulative 
+sum of a random walk.
+2. Fix #93 - Add Function `std_cum_prod_augment()` to calculate the cumulative
+product of a random walk.
+3. Fix #94 - Add Function `std_cum_min_augment()` to calculate the cumulative
+minimum of a random walk.
+4. Fix #95 - Add Function `std_cum_max_augment()` to calculate the cumulative
+maximum of a random walk.
+5. Fix #96 - Add Function `std_cum_mean_augment()` to calculate the cumulative
+mean of a random walk.
+6. Fix #113 - Add Function `get_attributes()` to get attributes without the `row.names`
+7. Fix #123 - Add Function `running_quantile()` to calculate the running quantile
+of a given vector.
+
+## Minor Improvements and Fixes
+1. Fix #117 - Add `.interactive` parameter to `visualize_walks()` to allow for
+interactive plots.
+2. Fix #120 - Add `.pluck` parameter to `visualize_walks()` to allow for plucking
+of specific graph of walks.
+
 # RandomWalker 0.1.0
 
 ## Breaking Changes

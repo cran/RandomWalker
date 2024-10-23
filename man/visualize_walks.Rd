@@ -4,17 +4,24 @@
 \alias{visualize_walks}
 \title{Visualize Walks}
 \usage{
-visualize_walks(.data, .alpha = 0.7)
+visualize_walks(.data, .alpha = 0.7, .interactive = FALSE, .pluck = FALSE)
 }
 \arguments{
 \item{.data}{The input data. Assumed to be created by one of the random walk
 functions in the RandomWalker package, but can be any data frame or tibble
 that contains columns \code{walk_number}, \code{x}, and one or more numeric columns
-like \code{x}, \code{cum_sum}, \code{cum_prod}, \code{cum_min}, \code{cum_max} and \code{cum_mean}, for
+like \code{y}, \code{cum_sum}, \code{cum_prod}, \code{cum_min}, \code{cum_max} and \code{cum_mean}, for
 instance.}
 
 \item{.alpha}{The alpha value for all the line charts in the visualization.
 Values range from 0 to 1. Default is 0.7.}
+
+\item{.interactive}{A boolean value. TRUE if you want the patches to be
+interactive. FALSE if you don't. Default is FALSE.}
+
+\item{.pluck}{If you want to visualize only one of the You can choose one of
+the values (\code{y}, \code{cum_sum}, \code{cum_prod}, \code{cum_min}, \code{cum_max}, \code{cum_mean}).
+Default is FALSE.}
 }
 \value{
 A patchwork composed of 1 or more patches
@@ -41,11 +48,16 @@ It is possible there are more when you read this, but you can check the rest
 of the documentation for the current situation.
 
 The visualization function is meant to be easy to use. No parameters needed,
-but you can set the \code{.alpha} if the default value of 0.7 isn't to your
+but you can set \code{.alpha} if the default value of 0.7 isn't to your
 liking.
 
-You can combine this function with many tidyverse functions (either before or
-after). There's one example below.
+You can also choose whether you want the visualization to be interactive or
+not by setting \code{.interactive} to TRUE. The function uses the \code{ggiraph}
+package for making the patches interactive.
+
+If you want to visualize only one of the attributes, you can choose use one of
+these values (\code{y}, \code{cum_sum}, \code{cum_prod}, \code{cum_min}, \code{cum_max}, \code{cum_mean}) for
+the \code{.pluck} parameter.
 }
 \examples{
 # Generate random walks and visualize the result
@@ -60,14 +72,18 @@ rw30() |>
 
 # Use the function with an input that has alternatives for y
 set.seed(123)
-random_normal_walk() |>
+random_normal_walk(.num_walks = 5, .initial_value = 100) |>
  visualize_walks()
 
-# Use the pluck function from purrr to pick just one visualization
+# Use the function to create interactive visualizations
 set.seed(123)
-random_normal_walk() |>
- visualize_walks() |>
- purrr::pluck(2)
+random_normal_walk(.num_walks = 5, .initial_value = 100) |>
+ visualize_walks(.interactive = TRUE)
+
+# Use .pluck to pick just one visualization
+set.seed(123)
+random_normal_walk(.num_walks = 5, .initial_value = 100) |>
+ visualize_walks(.pluck = "cum_sum")
 
 }
 \author{

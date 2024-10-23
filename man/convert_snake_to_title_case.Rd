@@ -31,7 +31,14 @@ convert_snake_to_title_case("cumulative_sum") # "Cumulative Sum"
 \seealso{
 Other Utility Functions: 
 \code{\link{generate_caption}()},
-\code{\link{rand_walk_helper}()}
+\code{\link{get_attributes}()},
+\code{\link{rand_walk_helper}()},
+\code{\link{running_quantile}()},
+\code{\link{std_cum_max_augment}()},
+\code{\link{std_cum_mean_augment}()},
+\code{\link{std_cum_min_augment}()},
+\code{\link{std_cum_prod_augment}()},
+\code{\link{std_cum_sum_augment}()}
 }
 \author{
 Antti Lennart Rask
