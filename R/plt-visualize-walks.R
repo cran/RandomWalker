@@ -83,6 +83,20 @@ visualize_walks <- function(.data, .alpha = 0.7, .interactive = FALSE, .pluck = 
   # Retrieve the attributes of the data (e.g., function name, number of walks, etc.)
   atb <- attributes(.data)
 
+  # Define plot options for ggiraph
+  plot_options <- list(
+    # Customize hover effect
+    ggiraph::opts_hover(css = "stroke:black;stroke-width:2pt;"),
+    # Customize hover-out effect
+    ggiraph::opts_hover_inv(css = "opacity:0.4;"),
+    # Place toolbar on top right
+    ggiraph::opts_toolbar(position = "topright"),
+    # Customize tooltip
+    ggiraph::opts_tooltip(offx = 200, offy = 5, use_cursor_pos = FALSE, opacity = 0.7),
+    # Enable zoom
+    ggiraph::opts_zoom(max = 5)
+  )
+
   # Function to generate a plot for a given y-variable in the data
   generate_plot <- function(y_var) {
 
@@ -93,7 +107,8 @@ visualize_walks <- function(.data, .alpha = 0.7, .interactive = FALSE, .pluck = 
     if (.interactive == FALSE) {
 
       # Create a ggplot object
-      p <- ggplot2::ggplot(.data, ggplot2::aes(x = x, y = get(y_var), color = walk_number)) +
+      p <- ggplot2::ggplot(.data, ggplot2::aes(x = step_number, y = get(y_var),
+                                               color = walk_number)) +
         # Plot lines with some transparency
         ggplot2::geom_line(alpha = .alpha) +
         # Use a minimal theme
@@ -113,7 +128,7 @@ visualize_walks <- function(.data, .alpha = 0.7, .interactive = FALSE, .pluck = 
         dplyr::mutate(
           .tooltip = paste0(
             "Walk Number: ", walk_number, " | ",
-            "Step: ", x, " | ",
+            "Step: ", step_number, " | ",
             y_label_pretty, ": ", round(get(y_var), digits = 3)
           )
         )
@@ -122,7 +137,7 @@ visualize_walks <- function(.data, .alpha = 0.7, .interactive = FALSE, .pluck = 
       g <- ggplot2::ggplot(
         .data,
         ggplot2::aes(
-          x       = x,
+          x       = step_number,
           y       = get(y_var),
           color   = walk_number,
           group   = walk_number,
@@ -153,7 +168,7 @@ visualize_walks <- function(.data, .alpha = 0.7, .interactive = FALSE, .pluck = 
   }
 
   # Identify variables to plot, excluding 'walk_number' and 'x'
-  plot_vars <- setdiff(atb$names, c("walk_number", "x"))
+  plot_vars <- setdiff(atb$names, c("walk_number", "step_number"))
 
   # Generate a list of plots for each variable in plot_vars
   plots <- lapply(plot_vars, generate_plot)
@@ -201,18 +216,7 @@ visualize_walks <- function(.data, .alpha = 0.7, .interactive = FALSE, .pluck = 
       return(
         ggiraph::girafe(
           ggobj   = plucked_plot + plot_theme,
-          options = list(
-            ggiraph::opts_hover(css = "stroke:black;stroke-width:2pt;"),
-            ggiraph::opts_hover_inv(css = "opacity:0.4;"),
-            ggiraph::opts_toolbar(position = "topright"),
-            ggiraph::opts_tooltip(
-              offx           = 200,
-              offy           = 5,
-              use_cursor_pos = FALSE,
-              opacity        = 0.7
-            ),
-            ggiraph::opts_zoom(max = 5)
-          )
+          options = plot_options
         )
       )
     }
@@ -234,20 +238,6 @@ visualize_walks <- function(.data, .alpha = 0.7, .interactive = FALSE, .pluck = 
 
     # Patchwork for the interactive version of the visualization
   } else {
-
-    # Define plot options for ggiraph
-    plot_options <- list(
-      # Customize hover effect
-      ggiraph::opts_hover(css = "stroke:black;stroke-width:2pt;"),
-      # Customize hover-out effect
-      ggiraph::opts_hover_inv(css = "opacity:0.4;"),
-      # Place toolbar on top right
-      ggiraph::opts_toolbar(position = "topright"),
-      # Customize tooltip
-      ggiraph::opts_tooltip(offx = 200, offy = 5, use_cursor_pos = FALSE, opacity = 0.7),
-      # Enable zoom
-      ggiraph::opts_zoom(max = 5)
-    )
 
     # Combine plots using patchwork for interactive visualization
     combined_plot <- if (length(plots) > 1) {

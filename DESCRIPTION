@@ -1,6 +1,6 @@
 Package: RandomWalker
 Title: Generate Random Walks Compatible with the 'tidyverse'
-Version: 0.2.0
+Version: 0.3.0
 Authors@R: c(
     person("Steven","Sanderson", email = "spsanderson@gmail.com", role = c("aut","cre","cph"),
       comment = c(ORCID = "0009-0006-7661-8247")
@@ -25,10 +25,10 @@ Imports: dplyr, tidyr, purrr, rlang, patchwork, NNS, ggiraph
 Suggests: knitr, rmarkdown, stats, ggplot2, tidyselect
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2024-10-23 12:53:57 UTC; ssanders
-Author: Steven Sanderson [aut, cre, cph]
-    (<https://orcid.org/0009-0006-7661-8247>),
+Packaged: 2025-05-06 12:34:59 UTC; ssanders
+Author: Steven Sanderson [aut, cre, cph] (ORCID:
+    <https://orcid.org/0009-0006-7661-8247>),
   Antti Rask [aut, cph]
 Maintainer: Steven Sanderson <spsanderson@gmail.com>
 Repository: CRAN
-Date/Publication: 2024-10-23 15:10:02 UTC
+Date/Publication: 2025-05-06 13:00:05 UTC

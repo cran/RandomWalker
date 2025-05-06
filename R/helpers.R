@@ -554,3 +554,92 @@ get_attributes <- function(.data){
   # Return
   return(atb)
 }
+
+#' Get Column Names
+#'
+#' @family Utility Functions
+#'
+#' @author Steven P. Sanderson II, MPH
+#'
+#' @description This function generates the column names of a rand walk
+#' data frame.
+#'
+#' @details The `rand_walk_column_names` function takes a data frame as input and
+#' returns the rand walk data with column names.
+#'
+#' @keywords internal
+#'
+#' @param .rand_data A data frame from which column names are to be extracted.
+#' @param .dim_names The dimnames passed from the rand walk function.
+#'
+#' @name rand_walk_column_names
+NULL
+#'
+#' @rdname rand_walk_column_names
+#'
+#' @export
+rand_walk_column_names <- function(.rand_data, .dim_names, .num_sims, .t) {
+  # Set column names
+  rand_steps <- stats::setNames(.rand_data, .dim_names)
+  rand_steps <- purrr::map(rand_steps, \(x) dplyr::as_tibble(x)) |>
+    purrr::list_cbind()
+  colnames(rand_steps) <- .dim_names
+  rand_steps <- purrr::map(
+    rand_steps, \(x) x |>
+      unlist(use.names = FALSE)) |>
+    dplyr::as_tibble()
+
+  # Combine into a tibble
+  rand_steps <- dplyr::tibble(
+    walk_number = factor(.num_sims),
+    step_number = 1:.t
+  ) |>
+    dplyr::bind_cols(rand_steps)
+
+  return(rand_steps)
+}
+
+#' Subset Walks by Extreme Values
+#'
+#' @family Utility Functions
+#'
+#' @author Steven P. Sanderson II, MPH
+#'
+#' @description This function subsets random walks to identify the walk with the maximum or minimum value.
+#'
+#' @param .data A data frame containing random walks. It must have columns `walk_number` and `y`.
+#' @param .type A character string specifying the type of subset: "max" for maximum value, "min" for minimum value, or "both" for both maximum and minimum values.
+#'
+#' @return A data frame containing the subsetted walk.
+#'
+#' @examples
+#' df <- rw30()
+#' subset_walks(df, .type = "max")
+#' subset_walks(df, .type = "min")
+#' subset_walks(df, .type = "both")
+#'
+#' @name rand_walk_column_names
+NULL
+#'
+#' @rdname rand_walk_column_names
+#'
+#' @export
+subset_walks <- function(.data, .type = "max") {
+  if (!.type %in% c("max", "min", "both")) {
+    rlang::abort("Invalid .type. Choose from 'max', 'min', or 'both'.")
+  }
+
+  if (.type == "max") {
+    max_row <- .data[which.max(.data$y), ]
+    return(.data[.data$walk_number == max_row$walk_number, ])
+  } else if (.type == "min") {
+    max_row <- .data[which.min(.data$y), ]
+    return(.data[.data$walk_number == max_row$walk_number, ])
+  } else if (.type == "both") {
+    max_row <- .data[which.max(.data$y), ]
+    min_row <- .data[which.min(.data$y), ]
+    max_walk <- .data[.data$walk_number == max_row$walk_number, ]
+    min_walk <- .data[.data$walk_number == min_row$walk_number, ]
+    return(dplyr::bind_rows(max_walk, min_walk))
+  }
+}

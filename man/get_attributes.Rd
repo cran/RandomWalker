@@ -28,8 +28,10 @@ get_attributes(mtcars)
 }
 \seealso{
 Other Utility Functions: 
+\code{\link{confidence_interval}()},
 \code{\link{convert_snake_to_title_case}()},
 \code{\link{generate_caption}()},
+\code{\link{rand_walk_column_names}()},
 \code{\link{rand_walk_helper}()},
 \code{\link{running_quantile}()},
 \code{\link{std_cum_max_augment}()},
