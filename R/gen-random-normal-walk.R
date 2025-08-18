@@ -1,6 +1,7 @@
 #' Generate Multiple Random Normal Walks in Multiple Dimensions
 #'
 #' @family Generator Functions
+#' @family Continuous Distribution
 #'
 #' @author Steven P. Sanderson II, MPH
 #'
@@ -32,13 +33,11 @@
 #'
 #' The following are also returned based upon how many dimensions there are and could be any of x, y and or z:
 #' \itemize{
-#'   \item `walk_number`: Factor representing the walk number.
-#'   \item `x`: Step index.
-#'   \item `y`: Normal distribution values.
-#'   \item `cum_sum`: Cumulative sum of `y`.
-#'   \item `cum_prod`: Cumulative product of `y`.
-#'   \item `cum_min`: Cumulative minimum of `y`.
-#'   \item `cum_max`: Cumulative maximum of `y`.
+#'   \item `cum_sum`: Cumulative sum of `dplyr::all_of(.dimensions)`.
+#'   \item `cum_prod`: Cumulative product of `dplyr::all_of(.dimensions)`.
+#'   \item `cum_min`: Cumulative minimum of `dplyr::all_of(.dimensions)`.
+#'   \item `cum_max`: Cumulative maximum of `dplyr::all_of(.dimensions)`.
+#'   \item `cum_mean`: Cumulative mean of `dplyr::all_of(.dimensions)`.
 #' }
 #'
 #' The tibble includes attributes for the function parameters.
@@ -53,6 +52,7 @@
 #'   t()
 #'
 #' @export
+#' @rdname random_normal_walk
 random_normal_walk <- function(.num_walks = 25, .n = 100, .mu = 0, .sd = 0.1,
                                .initial_value = 0, .samp = TRUE, .replace = TRUE,
                                .sample_size = 0.8, .dimensions = 1) {
@@ -75,7 +75,7 @@ random_normal_walk <- function(.num_walks = 25, .n = 100, .mu = 0, .sd = 0.1,
                  use_cli_format = TRUE)
   }
   if (!.dimensions %in% c(1, 2, 3)) {
-    rlang::abort("Number of dimensions must be 1, 2, or 3.", use_cli = TRUE)
+    rlang::abort("Number of dimensions must be 1, 2, or 3.", use_cli_format = TRUE)
   }
 
   # Variables
@@ -108,21 +108,6 @@ random_normal_walk <- function(.num_walks = 25, .n = 100, .mu = 0, .sd = 0.1,
     )
 
     # Set column names
-    # rand_steps <- stats::setNames(rand_steps, dim_names)
-    # rand_steps <- purrr::map(rand_steps, \(x) dplyr::as_tibble(x)) |>
-    #   purrr::list_cbind()
-    # colnames(rand_steps) <- dim_names
-    # rand_steps <- purrr::map(
-    #   rand_steps, \(x) x |>
-    #     unlist(use.names = FALSE)) |>
-    #   dplyr::as_tibble()
-    #
-    # # Combine into a tibble
-    # dplyr::tibble(
-    #   walk_number = factor(walk_num),
-    #   step_number = 1:periods
-    # ) |>
-    #   dplyr::bind_cols(rand_steps)
     rand_walk_column_names(rand_steps, dim_names, walk_num, t)
   }
 

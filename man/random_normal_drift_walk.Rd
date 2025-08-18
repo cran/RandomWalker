@@ -40,8 +40,7 @@ on the number of dimensions:
 \item \code{x}, \code{y}, \code{z}: If \code{.dimensions = 3}, the values of the walk in three dimensions.
 }
 
-The following are also returned based upon how many dimensions there are and
-could be any of x, y and or z:
+The following are also returned based upon how many dimensions there are and could be any of x, y and or z:
 \itemize{
 \item \code{cum_sum}: Cumulative sum of \code{dplyr::all_of(.dimensions)}.
 \item \code{cum_prod}: Cumulative product of \code{dplyr::all_of(.dimensions)}.
@@ -77,9 +76,47 @@ Other Generator Functions:
 \code{\link{brownian_motion}()},
 \code{\link{discrete_walk}()},
 \code{\link{geometric_brownian_motion}()},
-\code{\link{random_normal_walk}()}
+\code{\link{random_beta_walk}()},
+\code{\link{random_binomial_walk}()},
+\code{\link{random_cauchy_walk}()},
+\code{\link{random_chisquared_walk}()},
+\code{\link{random_displacement_walk}()},
+\code{\link{random_exponential_walk}()},
+\code{\link{random_f_walk}()},
+\code{\link{random_gamma_walk}()},
+\code{\link{random_geometric_walk}()},
+\code{\link{random_hypergeometric_walk}()},
+\code{\link{random_logistic_walk}()},
+\code{\link{random_lognormal_walk}()},
+\code{\link{random_multinomial_walk}()},
+\code{\link{random_negbinomial_walk}()},
+\code{\link{random_normal_walk}()},
+\code{\link{random_poisson_walk}()},
+\code{\link{random_smirnov_walk}()},
+\code{\link{random_t_walk}()},
+\code{\link{random_uniform_walk}()},
+\code{\link{random_weibull_walk}()},
+\code{\link{random_wilcox_walk}()},
+\code{\link{random_wilcoxon_sr_walk}()}
+
+Other Continuous Distribution: 
+\code{\link{brownian_motion}()},
+\code{\link{geometric_brownian_motion}()},
+\code{\link{random_beta_walk}()},
+\code{\link{random_cauchy_walk}()},
+\code{\link{random_chisquared_walk}()},
+\code{\link{random_exponential_walk}()},
+\code{\link{random_f_walk}()},
+\code{\link{random_gamma_walk}()},
+\code{\link{random_logistic_walk}()},
+\code{\link{random_lognormal_walk}()},
+\code{\link{random_normal_walk}()},
+\code{\link{random_t_walk}()},
+\code{\link{random_uniform_walk}()},
+\code{\link{random_weibull_walk}()}
 }
 \author{
 Steven P. Sanderson II, MPH
 }
+\concept{Continuous Distribution}
 \concept{Generator Functions}
